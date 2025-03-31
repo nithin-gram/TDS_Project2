@@ -1,100 +1,92 @@
-# Automated Question Answering API
+# Automated QA API
 
-An LLM-powered API for automatically answering questions from course materials.
+This API leverages cutting-edge AI models to provide intelligent responses to questions derived from course materials. Built with FastAPI, it offers seamless integration, real-time processing, and dynamic code execution.
 
-## Project Description
+## What This API Does
+- **Understands Questions**: Processes natural language queries and determines the best approach to answering them.
+- **Executes Code**: If a question requires computation, the system generates and runs Python or Bash scripts.
+- **Handles File Inputs**: Accepts ZIP and CSV files, extracting relevant data to improve answer accuracy.
 
-This FastAPI application uses advanced language models to provide accurate answers to questions. The system can:
+## How It Works
+1. A user submits a question and, optionally, a file.
+2. The system decides whether it can directly respond or if code execution is required.
+3. If code execution is needed, Python or Bash scripts are generated and run in a controlled environment.
+4. If a file is provided, its contents are parsed and factored into the response.
+5. The answer is returned to the user.
 
-1. Process natural language questions and find similar questions in its database
-2. Generate and execute Python or Bash code to solve computational problems
-3. Handle file uploads (ZIP, CSV) and extract relevant information
+## Technical Highlights
+- **AI-Powered Processing**: Connects to external LLM APIs for context-aware responses.
+- **Secure Execution**: Runs generated code in an isolated sandbox.
+- **File Integration**: Extracts and processes ZIP/CSV files for enhanced understanding.
+- **Optimized Performance**: Uses efficient algorithms to find similar questions and reduce redundant computations.
 
-## Features
-
-### Question Processing
-- Determines whether code execution is needed or if a direct answer is sufficient
-
-### Code Generation and Execution
-- Generates Python or Bash code based on the question
-- Executes code in a secure temporary environment
-- Extracts code from markdown code blocks if necessary
-
-### File Processing
-- Handles ZIP files by extracting contents
-- Processes CSV files to extract data
-- Provides file context to the LLM for better answers
-
-### API Integration
-- Connects to LLM API for generating answers and code
-- Uses environment variables for secure API token storage
-
-## Setup
-
+## Installation Guide
 ### Prerequisites
+Ensure your environment meets the following:
 - Python 3.8+
-- FastAPI
+- FastAPI Framework
 - scikit-learn
-- dotenv
+- dotenv for environment variables
 
-### Installation
-
+### Steps to Set Up
 1. Clone the repository:
-```bash
-git clone https://github.com/nithin-gram/tdsproject2.git
-cd tdsproject2
-```
+   ```bash
+   git clone https://github.com/nithin-gram/TDS_Project2.git
+   cd Tds_Project2
+   ```
+2. Install required dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Configure API keys in a `.env` file:
+   ```plaintext
+   GITHUB_API_KEY=your_api_key_here
+   VERCEL_API_KEY=your_api_key_here
+   ```
+4. Start the API server:
+   ```bash
+   uvicorn app:app --reload
+   ```
 
-2. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-3. Create a `.env` file with your API token:
-```
-GITHUB_API_KEY=your_api_token_here
-VERCEL_API_KEY=your_api_token_here
-```
-
-4. Run the application:
-```bash
-uvicorn app:app --reload
-```
-
-## API Usage
-
+## Making API Requests
 ### Endpoint: `/api`
+- **Method**: `POST`
+- **Expected Input**:
+  - `question`: A textual query (required).
+  - `file`: An optional ZIP or CSV file.
 
-**Method**: POST
-
-**Parameters**:
-- `question` (required): The question to answer
-- `file` (optional): A file to upload (ZIP or CSV)
-
-### Example Request
-
+#### Example Request
 ```bash
 curl -X POST "http://localhost:8080/api/" \
   -H "Content-Type: multipart/form-data" \
-  -F "question=What is the output of pd.read_csv('data.csv').head()?" \
+  -F "question=How does pandas read a CSV file?" \
   -F "file=@data.csv"
 ```
 
-## Error Handling
+## Handling Errors
+Common failure scenarios include:
+- Incorrectly formatted questions
+- Errors in code execution
+- Issues with file processing
+- API response failures
 
-The API returns detailed error messages when:
-- Code execution fails
-- The LLM API returns an error
-- File processing encounters issues
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature-name`
-3. Commit your changes: `git commit -m 'Add some feature'`
-4. Push to the branch: `git push origin feature-name`
-5. Submit a pull request
+## How to Contribute
+Want to enhance this project? Follow these steps:
+1. Fork the repo.
+2. Create a new feature branch:
+   ```bash
+   git checkout -b new-feature
+   ```
+3. Make improvements and commit:
+   ```bash
+   git commit -m 'Implemented a new feature'
+   ```
+4. Push the branch:
+   ```bash
+   git push origin new-feature
+   ```
+5. Open a pull request.
 
 ## License
+This project is licensed under MIT, allowing free and open use.
 
-MIT
